@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\Consumption;
-use App\Models\Report;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controller\UserController;
-
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\ConsumptionController;
+use App\Http\Controllers\ReportController;
 
 
 Route::post('register', [UserController::class, 'register']);
