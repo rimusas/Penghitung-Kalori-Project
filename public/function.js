@@ -116,3 +116,14 @@ const ctx = document.getElementById('kaloriChart').getContext('2d');
         }
       }
     });
+ document.getElementById('register-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = new FormData(this);
+      let output = '';
+      for (let [key, value] of data.entries()) {
+        output += `${key}: ${value}\n`;
+      }
+
+      alert("Data berhasil didaftarkan:\n" + output);
+    });
