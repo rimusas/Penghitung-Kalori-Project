@@ -127,3 +127,30 @@ const ctx = document.getElementById('kaloriChart').getContext('2d');
 
       alert("Data berhasil didaftarkan:\n" + output);
     });
+    const riwayatData = [
+      {
+        tanggal: '23/12/2024',
+        makanan: 'Makanan 1',
+        kalori: '65 kkal',
+        status: 'Normal'
+      },
+      {
+        tanggal: '24/12/2024',
+        makanan: 'Makanan 2',
+        kalori: '129 kkal',
+        status: 'Normal'
+      }
+    ];
+
+    const tbody = document.getElementById('riwayat-body');
+
+    riwayatData.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.tanggal}</td>
+        <td>${item.makanan}</td>
+        <td>${item.kalori}</td>
+        <td>${item.status}</td>
+      `;
+      tbody.appendChild(row);
+    });
