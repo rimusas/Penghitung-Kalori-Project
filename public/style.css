@@ -1,0 +1,273 @@
+ body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #a3cfff;
+    }
+
+    header {
+      background-color: #7cb5f7;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu {
+      display: flex;
+      gap: 20px;
+    }
+
+    .menu a, .login-btn {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .login-container {
+      width: 400px;
+      margin: 80px auto;
+      background-color: #7cb5f7;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: #d0d7e2;
+    }
+
+    .button-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .button-container button {
+      padding: 10px 20px;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #7cb5f7;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #a3cfff;
+    }
+
+    header {
+      background-color: #7cb5f7;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header .menu {
+      display: flex;
+      gap: 20px;
+    }
+
+    header .menu a, header .profile-btn {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    header .profile-btn {
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .container {
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .left {
+      width: 60%;
+    }
+
+    .right {
+      background-color: #87bfff;
+      padding: 20px;
+      width: 30%;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .add-btn {
+      cursor: pointer;
+      color: blue;
+      font-size: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #7cb5f7;
+      margin-top: 30px;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #a3cfff;
+    }
+
+    header {
+      background-color: #7cb5f7;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu {
+      display: flex;
+      gap: 20px;
+    }
+
+    .menu a, .profile-btn {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    .profile-btn {
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    canvas {
+      background-color: #d0e2ff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #7cb5f7;
+      margin-top: 50px;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #a3cfff;
+    }
+
+    header {
+      background-color: #7cb5f7;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu {
+      display: flex;
+      gap: 20px;
+    }
+
+    .menu a, .profile-btn {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    .profile-btn {
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    canvas {
+      background-color: #d0e2ff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #7cb5f7;
+      margin-top: 50px;
+    }
