@@ -7,6 +7,7 @@ use App\Http\Controller\HomeController;
 use App\Http\Controllers\API\ConsumptionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 
 //Route::get('/', [HomeController::class, 'index'])->name('home');

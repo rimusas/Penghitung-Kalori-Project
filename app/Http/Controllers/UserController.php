@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+   
+
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -25,6 +27,7 @@ class UserController extends Controller
         $user = User::create($validated);
 
         return response()->json(['user' => $user], 201);
+        return view('register');
     }
 
     public function login(Request $request)
