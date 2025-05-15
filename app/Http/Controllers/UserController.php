@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function register(){
+        return view('register');
+    }
+/*
     public function register(Request $request) {
-        $validated = $request->validate([
+          $validated = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:6',
@@ -37,5 +41,6 @@ class UserController extends Controller
         Auth::logout();
         return redirect('/');
     }
+        */
 }
 
