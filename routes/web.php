@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\LoginController;
+use App\Models\Consumption;
+use App\Models\Report;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controller\HomeController;
 use App\Http\Controllers\API\ConsumptionController;

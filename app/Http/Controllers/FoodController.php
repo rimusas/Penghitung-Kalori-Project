@@ -8,32 +8,49 @@ use Illuminate\Http\Request;
 
 class FoodController extends Controller
 {
-    public function index() {
-        return Food::all();
+    public function index()
+    {
+        $foods = Food::all();
+        return response()->json($foods);
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'nama' => 'required',
-            'kalori' => 'required|numeric',
-            'jenis_makanan' => 'required'
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string',
+            'kalori_per_porsi' => 'required|numeric',
+            'tipe' => 'nullable|string',
         ]);
 
-        return Food::create($request->all());
+        $food = Food::create($validated);
+        return response()->json($food, 201);
     }
 
-    public function show($id) {
-        return Food::findOrFail($id);
-    }
-
-    public function update(Request $request, $id) {
+    public function show($id)
+    {
         $food = Food::findOrFail($id);
-        $food->update($request->all());
-        return $food;
+        return response()->json($food);
     }
 
-    public function destroy($id) {
-        return Food::destroy($id);
+    public function update(Request $request, $id)
+    {
+        $food = Food::findOrFail($id);
+
+        $validated = $request->validate([
+            'nama' => 'required|string',
+            'kalori_per_porsi' => 'required|numeric',
+            'tipe' => 'nullable|string',
+        ]);
+
+        $food->update($validated);
+        return response()->json($food);
+    }
+
+    public function destroy($id)
+    {
+        $food = Food::findOrFail($id);
+        $food->delete();
+        return response()->json(['message' => 'Food deleted successfully']);
     }
 }
 

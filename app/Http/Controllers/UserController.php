@@ -9,38 +9,39 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function register(){
-        return view('register');
-    }
-/*
-    public function register(Request $request) {
-          $validated = $request->validate([
-            'name' => 'required',
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|string|min:6',
+            'umur' => 'required|integer',
+            'jenisKelamin' => 'required|string',
+            'tinggi' => 'required|numeric',
+            'berat' => 'required|numeric',
         ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-        ]);
+        $validated['password'] = Hash::make($validated['password']);
+        $user = User::create($validated);
 
-        Auth::login($user);
-        return redirect('/dashboard');
+        return response()->json(['user' => $user], 201);
     }
 
-    public function login(Request $request) {
-        if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect('/dashboard');
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            return response()->json(['massage' => 'Login Successful'], 200);
         }
-        return back()->withErrors(['email' => 'Email atau password salah.']);
+
+        return response()->json(['massage' => 'Invalid Credentials'], 401);
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
-        return redirect('/');
+        return response()->json(['massage' => 'Logged out Successfully']);
     }
-        */
 }
 
