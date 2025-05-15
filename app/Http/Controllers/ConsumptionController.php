@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
+
+
 use App\Http\Controllers\Controller;
 use App\Models\Consumption;
 use Illuminate\Http\Request;
 
 class ConsumptionController extends Controller
 {
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
+    public function consumption(){
+        return view('inputmakanan');
+    }
+    /*
+    public function store(Request $request) {
+        $request->validate([
             'user_id' => 'required|exists:users,id',
             'food_id' => 'required|exists:foods,id',
             'porsi' => 'required|numeric',
@@ -21,4 +26,5 @@ class ConsumptionController extends Controller
         $consumption = Consumption::create($validated);
         return response()->json($consumption, 201);
     }
+    */
 }
