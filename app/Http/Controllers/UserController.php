@@ -43,6 +43,5 @@ class UserController extends Controller
         Auth::logout();
         return response()->json(['massage' => 'Logged out Successfully']);
     }
-        */
 }
 
