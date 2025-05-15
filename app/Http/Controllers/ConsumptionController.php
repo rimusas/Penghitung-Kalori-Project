@@ -8,15 +8,17 @@ use Illuminate\Http\Request;
 
 class ConsumptionController extends Controller
 {
-    public function store(Request $request) {
-        $request->validate([
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'food_id' => 'required|exists:foods,id',
-            'porsi' => 'required|numeric|min:1',
-            'waktu_makan' => 'required',
+            'porsi' => 'required|numeric',
+            'waktu_makan' => 'required|string',
             'tanggal' => 'required|date',
         ]);
 
-        return Consumption::create($request->all());
+        $consumption = Consumption::create($validated);
+        return response()->json($consumption, 201);
     }
 }

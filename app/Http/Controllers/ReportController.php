@@ -8,13 +8,9 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function show($week) {
-        $userId = auth()->id();
-        $report = Report::where('user_id', $userId)
-                        ->where('minggu_ke', $week)
-                        ->first();
-
-        return $report ? response()->json($report)
-                       : response()->json(['message' => 'Laporan tidak ditemukan'], 404);
+    public function show($minggu)
+    {
+        $reports = Report::where('minggu_ke', $minggu)->get();
+        return response()->json($reports);
     }
 }
