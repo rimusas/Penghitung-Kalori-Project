@@ -11,7 +11,7 @@ class Report extends Model
 
     protected $fillable = [
         'user_id',
-        'minggu_ke',
+        'tanggal',
         'total_kalori',
         'status',
     ];

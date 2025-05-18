@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->integer('minggu_ke');
+            $table->date('tanggal');
             $table->float('total_kalori');
-            $table->string('status');
+            $table->enum('status', ['cukup', 'kurang', 'berlebih']);
             $table->timestamps();
         });
     }

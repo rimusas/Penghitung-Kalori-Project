@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // Primary Key
             $table->string('nama', 100); // Batas maksimal nama adalah 100 karakter
             $table->string('email', 255)->unique(); // Email unik dan batas 255 karakter
             $table->string('password'); // Hash password biasanya memiliki panjang tetap

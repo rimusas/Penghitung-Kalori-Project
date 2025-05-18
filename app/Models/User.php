@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Kolom yang disembunyikan dalamm respons JSON
      *
      * @var list<string>
      */
@@ -37,26 +37,21 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function consumption()
+    // Kolom dengan tipe data casting
+    protected $casts = [
+        'tinggi' => 'float',
+        'berat' => 'float',
+    ];
+
+    // Relasi: User memiliki banyak konsumsi Food
+    public function foods()
     {
-        return $this->hasMany(Consumption::class);
+        return $this->hasMany(Food::class);
     }
 
+    // Relasi: User memiliki banyak Report
     public function reports()
     {
         return $this->hasMany(Report::class);
-    }
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
     }
 }
