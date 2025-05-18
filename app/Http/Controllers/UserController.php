@@ -6,45 +6,96 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-   
-
+    // Register pengguna baru
     public function register(Request $request)
     {
-        $validated = $request->validate([
-            'nama' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
-            'umur' => 'required|integer',
-            'jenisKelamin' => 'required|string',
-            'tinggi' => 'required|numeric',
-            'berat' => 'required|numeric',
-        ]);
+        try {
+            $validated = $request->validate([
+                'nama' => 'required|string|max:255',
+                'email' => 'required|email|unique:users|max:255',
+                'password' => 'required|string|min:6',
+                'umur' => 'required|integer|min:1',
+                'jenisKelamin' => 'required|string|in:Laki-laki,Perempuan',
+                'tinggi' => 'required|numeric|min:50',
+                'berat' => 'required|numeric|min:10',
+            ]);
 
-        $validated['password'] = Hash::make($validated['password']);
-        $user = User::create($validated);
+            // Hash password dan simpan data pengguna
+            $validated['password'] = Hash::make($validated['password']);
+            $user = User::create($validated);
 
-        return response()->json(['user' => $user], 201);
-        return view('register');
+            Log::info('User registered', ['user_id' => $user->id]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User registered successfully',
+                'data' => $user
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Registration failed', ['error' => $e->getMessage()]);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Registration failed',
+                'details' => $e->getMessage()
+            ], 500);
+        }
     }
 
+    // Login pengguna
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
 
-        if (Auth::attempt($credentials)) {
-            return response()->json(['massage' => 'Login Successful'], 200);
+        if (Auth::attempt($validated)) {
+            $user = Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            Log::info('User logged in', ['user_id' => $user->id]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Login successful',
+                'data' => [
+                    'user' => $user,
+                    'token' => $token
+                ]
+            ], 200);
         }
 
-        return response()->json(['massage' => 'Invalid Credentials'], 401);
+        Log::warning('Failed login attempt', ['email' => $request->email]);
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid credentials'
+        ], 401);
     }
 
-    public function logout()
+    // Logout pengguna
+    public function logout(Request $request)
     {
-        Auth::logout();
-        return response()->json(['massage' => 'Logged out Successfully']);
+        try {
+            $request->user()->currentAccessToken()->delete();
+
+            Log::info('User logged out', ['user_id' => $request->user()->id]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Logged out successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Logout failed', ['error' => $e->getMessage()]);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Logout failed',
+                'details' => $e->getMessage()
+            ], 500);
+        }
     }
 }
-

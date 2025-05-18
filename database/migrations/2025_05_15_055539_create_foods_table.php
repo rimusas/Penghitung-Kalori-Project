@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('foods', function (Blueprint $table) {
+        Schema::table('foods', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('kalori_per_porsi');
-            $table->string('tipe')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('nama_makanan');
+            $table->double('porsi');
+            $table->double('kalori_total');
+            $table->boolean('mengandung_daging')->default(true);
+            $table->boolean('seorang_vegetarian')->default(false);
             $table->timestamps();
         });
     }

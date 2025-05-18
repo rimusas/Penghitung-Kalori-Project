@@ -9,14 +9,22 @@ class Food extends Model
 {
     use HasFactory;
 
+    // Nama tabel
+    protected $table = 'foods';
+
+    // Atribut yang dapat diisi
     protected $fillable = [
-        'nama',
-        'kalori_per_porsi',
-        'tipe',
+        'user_id',
+        'nama_makanan',
+        'porsi',
+        'total_kalori',
+        'mengandung_daging',
+        'seorang_vegetarian',
     ];
 
-    public function consumptions()
+    // Relasi Food dimiliki oleh User
+    public function user()
     {
-        return $this->hasMany(Consumption::class);
+        return $this->belongsTo(User::class);
     }
 }

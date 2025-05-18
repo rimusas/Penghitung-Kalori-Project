@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('email');
-            $table->string('password');
-            $table->string('umur');
-            $table->string('jenisKelamin');
-            $table->string('tinggi');
-            $table->string('berat');
+            $table->string('nama', 100); // Batas maksimal nama adalah 100 karakter
+            $table->string('email', 255)->unique(); // Email unik dan batas 255 karakter
+            $table->string('password'); // Hash password biasanya memiliki panjang tetap
+            $table->integer('umur')->unsigned(); // Umur tidak boleh negatif
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']); // Jenis kelamin terbatas
+            $table->float('tinggi', 5); // Tinggi dengan maksimal 5 digit
+            $table->float('berat', 5); // Berat dengan maksimal 5 digit
             $table->timestamps();
         });
     }
