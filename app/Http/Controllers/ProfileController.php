@@ -14,37 +14,25 @@ class ProfileController extends Controller
      */
     public function updateProfile(Request $request)
     {
-        try {
-            // Validasi input
-            $validated = $request->validate([
-                'nama' => 'required|string|max:255',
-                'umur' => 'required|integer|min:1',
-                'jenisKelamin' => 'required|string|in:Laki-laki,Perempuan',
-                'tinggi' => 'required|numeric|min:50',
-                'berat' => 'required|numeric|min:10',
-            ]);
-
-            // Ambil pengguna yang sedang login
-            $user = Auth::user();
-
-            // Perbarui data profil pengguna
-            $user->update($validated);
-
+        // Validasi input
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'umur' => 'required|integer|min:1',
+            'jenisKelamin' => 'required|string|in:Laki-laki,Perempuan',
+            'tinggi' => 'required|numeric|min:50',
+            'berat' => 'required|numeric|min:10',
+        ]);
+    
+        // Ambil pengguna yang sedang login
+        $user = Auth::user();
+    
+        // Gunakan pendekatan manual untuk pengecekan keberhasilan update
+        if ($user->update($validated)) {
             Log::info('Profile updated', ['user_id' => $user->id]);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Profile updated successfully',
-                'data' => $user
-            ], 200);
-        } catch (\Exception $e) {
-            Log::error('Profile update failed', ['error' => $e->getMessage()]);
-
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to update profile',
-                'details' => $e->getMessage()
-            ], 500);
+            return redirect('/home')->with('status', 'Profil berhasil diperbarui.');
+        } else {
+            Log::warning('Profile update failed', ['user_id' => $user->id]);
+            return redirect('/home')->with('error', 'Gagal memperbarui profil.');
         }
     }
 

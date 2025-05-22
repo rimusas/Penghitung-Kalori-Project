@@ -41,10 +41,10 @@
         <label for="umur">Umur:</label><br>
         <input type="number" id="umur" name="umur" value="{{ $user->umur }}" required><br><br>
 
-        <label for="jenis_kelamin">Jenis Kelamin:</label><br>
-        <select id="jenis_kelamin" name="jenis_kelamin" required>
-          <option value="Laki-laki" {{ $user->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-          <option value="Perempuan" {{ $user->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+        <label for="jenisKelamin">Jenis Kelamin:</label><br>
+        <select id="jenisKelamin" name="jenisKelamin" required>
+          <option value="Laki-laki" {{ $user->jenisKelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+          <option value="Perempuan" {{ $user->jenisKelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
         </select><br><br>
 
         <label for="berat">Berat Badan (kg):</label><br>
