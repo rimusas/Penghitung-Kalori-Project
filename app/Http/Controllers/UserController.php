@@ -42,7 +42,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('/profile');
+            return redirect('/home');
         }
         return back()->with('Error', 'Email atau password salah');
     }
@@ -53,6 +53,7 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/login')->with('success', 'Anda telah logout');
     }
 }

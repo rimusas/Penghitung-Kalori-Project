@@ -11,11 +11,16 @@
   <header>
     <div class="site-name">Aplikasi Kalori</div>
     <div class="menu">
-      <a href="{{ url('/') }}">Beranda</a>
-      <a href="{{ url('/history') }}">Riwayat</a>
-      <a href="{{ url('/report') }}">Laporan</a>
+      <a href="{{ url('/home') }}">Beranda</a>
+      <a href="{{ url('/riwayat') }}">Riwayat</a>
+      <a href="{{ url('/laporan') }}">Laporan</a>
     </div>
-    <div class="profile-btn">Profil</div>
+    <div>
+      <form action="{{ url('/logout') }}" method="POST">
+        @csrf
+        <button type="submit">Logout</button>
+      </form>
+    </div>
   </header>
 
   <div class="container">

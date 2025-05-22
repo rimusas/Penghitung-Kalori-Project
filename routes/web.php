@@ -17,12 +17,16 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 // Rute yang memerlukan autentikasi
 Route::middleware('auth:sanctum')->group(function () {
+  Route::get('/home', function () {
+    return view('beranda', ['user' => Auth::user()]);
+  })->middleware('auth')->name('home');
   // Rute untuk profile
   Route::view('/profile', 'profile')->name('profile');
   Route::put('/profile', [ProfileController::class, 'updateProfile']);
   Route::get('/profile', [ProfileController::class, 'viewProfile']);
 
   // Rute untuk food
+  Route::view('/riwayat','riwayat')->name('riwayat');
   Route::post('/food', [FoodController::class, 'storeFoodEntry']);
   Route::get('/food/search', [FoodController::class, 'searchFood']);
   Route::get('/food/history', [FoodController::class, 'getDailyHistory']);
@@ -35,5 +39,6 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('/recommendations', [RecommendationController::class, 'getRecommendations']);
 
   // Rute untuk Report
+  Route::view('/laporan','laporan')->name('laporan');
   Route::get('/reports/weekly', [ReportController::class, 'generateWeeklyReport']);
 });

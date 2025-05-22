@@ -37,6 +37,7 @@
       padding: 5px 10px;
       border-radius: 5px;
     }
+    
 
     .login-container {
       width: 400px;
@@ -60,6 +61,7 @@
       border-radius: 5px;
       background-color: #d0d7e2;
     }
+
 
     .button-container {
       margin-top: 20px;
@@ -334,3 +336,5 @@
       background-color: #7cb5f7;
       margin-top: 50px;
     }
+
+    

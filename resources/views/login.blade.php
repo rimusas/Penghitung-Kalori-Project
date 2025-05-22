@@ -11,11 +11,10 @@
   <header>
     <div class="site-name">Penghitung Kalori Harian</div>
     <div class="menu">
-      <a href="{{ url('/') }}">Beranda</a>
+      <a href="{{ url('/home') }}">Beranda</a>
       <a href="{{ url('/history') }}">Riwayat</a>
       <a href="{{ url('/report') }}">Laporan</a>
     </div>
-    <div class="login-btn">Login</div>
   </header>
 
   <div class="login-container">
