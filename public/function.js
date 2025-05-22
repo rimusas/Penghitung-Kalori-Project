@@ -27,56 +27,36 @@ function login() {
       addCell.innerHTML = '';
     }
 
-    function calculateTotal() {
-      let total = 0;
-      const rows = document.querySelectorAll('#food-table tr');
-      rows.forEach((row, index) => {
-        if (index === 0) return; // Skip header
-        const cell = row.cells[1];
-        const input = cell.querySelector('input');
-        if (input) {
-          total += parseInt(input.value) || 0;
-        } else {
-          // Parse text value if not input
-          const value = cell.textContent.replace('kkal', '').trim();
-          total += parseInt(value) || 0;
-        }
-      });
-
-      document.getElementById('total-calories').innerText = total + ' kkal';
+      // Loop melalui semua baris di tabel makanan
+      function calculateTotal() {
+        let totalCalories = 0;
+    
+        // Ambil semua baris dari tabel makanan
+        const rows = document.querySelectorAll("table tbody tr");
+    
+        rows.forEach(row => {
+            const calorieCell = row.cells[2]; // Ambil kolom "Kalori Total"
+    
+            if (calorieCell) {
+                // Ambil teks dari sel, hapus spasi, dan ganti "kkal" jika ada
+                const caloriesText = calorieCell.textContent.replace(/[^0-9.]/g, "").trim();
+    
+                // Ubah teks menjadi angka
+                const calories = parseFloat(caloriesText);
+    
+                // Tambahkan nilai ke total jika valid
+                if (!isNaN(calories)) {
+                    totalCalories += calories;
+                } else {
+                    console.warn(`Invalid calories value: ${calorieCell.textContent}`);
+                }
+            }
+        });
+    
+        // Tampilkan total kalori di elemen hasil
+        document.getElementById("total-calories").textContent = `${totalCalories.toFixed(1)} kkal`;
     }
-
-function addFoodRow() {
-  const table = document.getElementById('food-table');
-  const row = table.insertRow(-1);
-
-  const foodCell = row.insertCell(0);
-  const calorieCell = row.insertCell(1);
-  const addCell = row.insertCell(2);
-
-  foodCell.innerHTML = `<input type="text" placeholder="Nama Makanan">`;
-  calorieCell.innerHTML = `<input type="number" placeholder="Kalori" class="calorie-input">`;
-  addCell.innerHTML = '';
-}
-
-function calculateTotal() {
-  let total = 0;
-  const rows = document.querySelectorAll('#food-table tr');
-  rows.forEach((row, index) => {
-    if (index === 0) return; // Skip header
-    const cell = row.cells[1];
-    const input = cell.querySelector('input');
-    if (input) {
-      total += parseInt(input.value) || 0;
-    } else {
-      const value = cell.textContent.replace('kkal', '').trim();
-      total += parseInt(value) || 0;
-    }
-  });
-
-  document.getElementById('total-calories').innerText = total + ' kkal';
-}
-
+  
 const ctx = document.getElementById('kaloriChart').getContext('2d');
     const kaloriChart = new Chart(ctx, {
       type: 'line',

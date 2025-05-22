@@ -26,8 +26,11 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('/profile', [ProfileController::class, 'viewProfile']);
 
   // Rute untuk food
+  Route::get('/home', [FoodController::class, 'index'])->middleware('auth')->name('home');
   Route::view('/riwayat','riwayat')->name('riwayat');
-  Route::post('/food', [FoodController::class, 'storeFoodEntry']);
+  Route::post('/food/store', [FoodController::class, 'storeFoodEntry'])->middleware('auth')->name('food.store');
+  Route::put('/food/update/{id}', [FoodController::class, 'updateFoodEntry'])->middleware('auth')->name('food.update');
+  Route::delete('/food/delete/{id}', [FoodController::class, 'deleteFoodEntry'])->middleware('auth')->name('food.delete');
   Route::get('/food/search', [FoodController::class, 'searchFood']);
   Route::get('/food/history', [FoodController::class, 'getDailyHistory']);
 
@@ -39,6 +42,6 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('/recommendations', [RecommendationController::class, 'getRecommendations']);
 
   // Rute untuk Report
-  Route::view('/laporan','laporan')->name('laporan');
   Route::get('/reports/weekly', [ReportController::class, 'generateWeeklyReport']);
+  Route::view('/laporan', 'laporan')->name('laporan');
 });

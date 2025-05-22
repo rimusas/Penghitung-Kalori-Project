@@ -2,7 +2,29 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #a3cfff;
+      min-height: 100vh; /* Tinggi maksimal halaman */
+      overflow-y: auto; /* Scrollbar vertikal jika konten lebih tinggi */
+      overflow-x: hidden; /* Tidak ada scrollbar horizontal */
+      padding: 0; /* Hilangkan padding default */
     }
+
+    /* Custom scrollbar untuk seluruh halaman (browser modern) */
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Warna latar belakang track */
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #888; /* Warna scrollbar */
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Warna scrollbar saat hover */
+}
 
     header {
       background-color: #7cb5f7;
@@ -92,23 +114,9 @@
       text-align: center;
       padding: 10px;
       background-color: #7cb5f7;
-      position: fixed;
-      bottom: 0;
+      position: relative;
+      bottom: auto;
       width: 100%;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #a3cfff;
-    }
-
-    header {
-      background-color: #7cb5f7;
-      padding: 10px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
     header .menu {
@@ -130,10 +138,18 @@
     }
 
     .container {
+      min-height: calc(100vh - 50px); /* Tinggi minimum sama dengan viewport, dikurangi header/footer */
+      margin-bottom: 50px; /* Memberi ruang untuk footer */
       padding: 30px;
       display: flex;
       justify-content: space-between;
     }
+
+    .container::after {
+      content: "";
+      display: block;
+      clear: both;
+  }
 
     .left {
       width: 60%;
@@ -145,6 +161,7 @@
       width: 30%;
       border-radius: 10px;
       text-align: center;
+
     }
 
     table {
@@ -164,32 +181,15 @@
       font-size: 20px;
     }
 
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #7cb5f7;
-      margin-top: 30px;
+    .table-data{
+      border:3px solid black;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #a3cfff;
+    .bawah{
+      width: 95%;
+      margin: auto;
     }
-
-    header {
-      background-color: #7cb5f7;
-      padding: 10px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .menu {
-      display: flex;
-      gap: 20px;
-    }
-
+  
     .menu a, .profile-btn {
       text-decoration: none;
       color: black;
@@ -203,15 +203,6 @@
       border-radius: 5px;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 50px auto;
-      padding: 20px;
-    }
-
-    h2 {
-      margin-bottom: 5px;
-    }
 
     h2 {
       margin-bottom: 30px;
@@ -252,12 +243,6 @@
       cursor: pointer;
     }
 
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #7cb5f7;
-      margin-top: 50px;
-    }
 
     p {
       margin-bottom: 30px;
@@ -269,72 +254,3 @@
       padding: 20px;
       border-radius: 10px;
     }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #7cb5f7;
-      margin-top: 50px;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #a3cfff;
-    }
-
-    header {
-      background-color: #7cb5f7;
-      padding: 10px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .menu {
-      display: flex;
-      gap: 20px;
-    }
-
-    .menu a, .profile-btn {
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
-    }
-
-    .profile-btn {
-      background-color: black;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 50px auto;
-      padding: 20px;
-    }
-
-    h2 {
-      margin-bottom: 5px;
-    }
-
-    p {
-      margin-bottom: 30px;
-      color: #333;
-    }
-
-    canvas {
-      background-color: #d0e2ff;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #7cb5f7;
-      margin-top: 50px;
-    }
-
-    

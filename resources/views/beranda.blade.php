@@ -34,33 +34,75 @@
       </p>
       <a href="{{ url('/profile') }}">Edit Profil</a>
       <h2>Input Makanan</h2>
-      <table id="food-table">
+      <form action="{{ route('food.store') }}" method="POST">
+          @csrf
+          <input type="text" name="nama_makanan" placeholder="Nama Makanan" required>
+          <input type="number" step="0.01" name="porsi" placeholder="Porsi" required>
+          <input type="number" step="0.01" name="kalori_per_porsi" placeholder="Kalori per Porsi" required>
+          <button type="submit">Tambahkan</button>
+      </form>
+
+    <table>
+    <thead>
         <tr>
-          <th>Nama Makanan</th>
-          <th>Jumlah Kalori</th>
-          <th>Tambahkan</th>
+            <th>Nama Makanan</th>
+            <th>Porsi</th>
+            <th>Kalori Total</th>
+            <th>Aksi</th>
         </tr>
-        <tr>
-          <td>Makanan 1</td>
-          <td>65 kkal</td>
-          <td class="add-btn" onclick="addFoodRow()">+</td>
-        </tr>
-        <tr>
-          <td>Makanan 2</td>
-          <td>129 kkal</td>
-          <td class="add-btn" onclick="addFoodRow()">+</td>
-        </tr>
+    </thead>
+    <tbody>
+        @foreach ($foods as $food)
+            <tr>
+                <td>{{ $food->nama_makanan }}</td>
+                <td>{{ $food->porsi }}</td>
+                <td>{{ $food->kalori_total }} kkal</td>
+                <td>
+                    <!-- Form untuk Edit -->
+                    <form action="{{ route('food.update', $food->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="nama_makanan" value="{{ $food->nama_makanan }}">
+                        <input type="hidden" name="porsi" value="{{ $food->porsi }}">
+                        <input type="hidden" name="kalori_per_porsi" value="{{ $food->kalori_total / $food->porsi }}">
+                        <button type="submit">Edit</button>
+                    </form>
+                    <!-- Form untuk Hapus -->
+                    <form action="{{ route('food.delete', $food->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
+      </tbody>
       </table>
     </div>
-
     <div class="right">
       <h3>Hasil Penghitungan</h3>
-      <p>Kalori Normal yang anda butuhkan adalah sekitar:</p>
+      <p>Total Kalori yang anda dapatkan hari ini:</p>
       <h2 id="total-calories">... kkal</h2>
       <button onclick="calculateTotal()">Hitung Total Kalori</button>
     </div>
   </div>
-
+  <div class="bawah">
+    <h2>Menu Makanan</h2>
+    <table class="table-data">
+        <tr class="table-data">
+          <th class="table-data">Gambar</th>
+          <th class="table-data">Nama Makanan</th>
+          <th class="table-data">berat per porsi</th>
+          <th class="table-data">Kalori</th>
+        </tr>
+        <tr>
+          <td class="table-data">ini gambar</td>
+          <td class="table-data">makanan</td>
+          <td class="table-data">12 g</td>
+          <td class="table-data">120</td>
+        </tr>
+      </table>
+  </div>
   <footer>
     <p>&copy; 2025 Aplikasi Kalori</p>
   </footer>

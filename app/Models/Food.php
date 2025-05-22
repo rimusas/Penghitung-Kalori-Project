@@ -14,9 +14,10 @@ class Food extends Model
         'user_id',
         'nama_makanan',
         'porsi',
-        'total_kalori',
-        'kategori',
+        'kalori_total',
     ];
+
+    protected $table = 'foods';
 
     // Kolom dengan tipe data casting
     protected $casts = [
