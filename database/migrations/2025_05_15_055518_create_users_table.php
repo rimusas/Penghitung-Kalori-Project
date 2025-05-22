@@ -20,7 +20,8 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']); // Jenis kelamin terbatas
             $table->float('tinggi', 5); // Tinggi dengan maksimal 5 digit
             $table->float('berat', 5); // Berat dengan maksimal 5 digit
-            $table->timestamps();
+            $table->rememberToken(); // Token untuk  fungsi remember me
+            $table->timestamps(); // Waktu pembuatan dan pembaruan data
         });
     }
 

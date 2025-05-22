@@ -2,37 +2,50 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Halaman Login</title>
-  <link rel="stylesheet" href="style.css"
+  <link rel="stylesheet" href="{{ asset('style.css') }}"
 </head>
 <body>
 
   <header>
-    <div class="site-name">Site name</div>
+    <div class="site-name">Penghitung Kalori Harian</div>
     <div class="menu">
-      <a href="#">Beranda</a>
-      <a href="#">Riwayat</a>
-      <a href="#">Laporan</a>
+      <a href="{{ url('/') }}">Beranda</a>
+      <a href="{{ url('/history') }}">Riwayat</a>
+      <a href="{{ url('/report') }}">Laporan</a>
     </div>
     <div class="login-btn">Login</div>
   </header>
 
   <div class="login-container">
     <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
+    <form action="{{ url('/login') }}" method="POST">
+    @csrf
+    <input type="email" name="email" id="email" placeholder="Email" required>
     <br>
-    <input type="password" id="password" placeholder="Password">
+    <input type="password" name="password" id="password" placeholder="Password" required>
     <div class="button-container">
-      <button onclick="login()">Login</button>
-      <button onclick="register()">Register</button>
+      <button type="submit">Login</button>
+      <a href="{{ url('/register') }}">Register</a>
     </div>
-  </div>
+    </form>
+    @if (session('error'))
+      <div class="error-massage">
+        {{ session('error') }}
+      </div>
+      @else
+      <div class="success-massage">
+        {{ session('success') }}
+      </div>
+    @endif
+    </div>
 
   <footer>
-    <p>&copy; 2025 Aplikasi Kalori</p>
+    <p>&copy; 2025 Aplikasi Penghitung Kalori Harian</p>
   </footer>
 
-  <script src="function.js"></script>
+  <script src="{{  assert('function.js') }}"></script>
 
 </body>
 </html>

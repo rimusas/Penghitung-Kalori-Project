@@ -9,13 +9,16 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Rute untuk autentikasi
-Route::post('/register', [UserController::class, 'register']);
+Route::view('/login', 'login')->name('login');
 Route::post('/login', [UserController::class, 'login']);
-Route::post('/logout', [UserController::class, 'logout']);
+Route::view('/register', 'register')->name('register');
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 // Rute yang memerlukan autentikasi
 Route::middleware('auth:sanctum')->group(function () {
   // Rute untuk profile
+  Route::view('/profile', 'profile')->name('profile');
   Route::put('/profile', [ProfileController::class, 'updateProfile']);
   Route::get('/profile', [ProfileController::class, 'viewProfile']);
 

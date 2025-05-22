@@ -84,4 +84,10 @@ class ProfileController extends Controller
             ], 500);
         }
     }
+
+    public function viewProfile()
+    {
+        $user = Auth::user(); //Mendapatkan data pengguna yang sedang login
+        return view('profile', ['user' => $user]);
+    }
 }

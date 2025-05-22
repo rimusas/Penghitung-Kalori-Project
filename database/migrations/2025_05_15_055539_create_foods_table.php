@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::table('foods', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('nama_makanan');
-            $table->double('porsi');
-            $table->double('kalori_total');
-            $table->boolean('mengandung_daging')->default(true);
-            $table->boolean('seorang_vegetarian')->default(false);
+            $table->string('nama_makanan'); // Nama Makanan
+            $table->float('porsi', 5); // Jumlah porsi (maksimal 99999)
+            $table->float('kalori_total', 6); // Total Kalori makanan (maks 999999)
+            $table->enum('kategori', ['sarapan', 'makan_siang', 'makan_malam', 'snack'])->default('makan_siang'); // Kategori makanan
             $table->timestamps();
         });
     }

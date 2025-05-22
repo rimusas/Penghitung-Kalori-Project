@@ -2,56 +2,69 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Halaman Register</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ asset('style.css') }}">
 </head>
 <body>
 
   <header>
-    <div class="site-name">Site name</div>
+    <div class="site-name">Aplikasi Kalori</div>
     <div class="menu">
-      <a href="#">Beranda</a>
-      <a href="#">Riwayat</a>
-      <a href="#">Laporan</a>
+      <a href="{{ url('/') }}">Beranda</a>
+      <a href="{{ url('/history') }}">Riwayat</a>
+      <a href="{{ url('/report') }}">Laporan</a>
     </div>
     <div class="profile-btn">Profil</div>
   </header>
 
   <div class="container">
-    <h2>Login</h2>
-    <form id="register-form">
+    <h2>Register</h2>
+
+    @if ($errors->any())
+      <div class="error-messages">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
+    <form action="{{ url('/register') }}" method="POST" id="register-form">
+      @csrf
       <div class="form-group">
         <label>Nama*</label>
         <input type="text" name="nama" required>
       </div>
       <div class="form-group">
         <label>Berat Badan*</label>
-        <input type="number" name="berat" required>
+        <input type="number" name="berat" step="0.01" required>
       </div>
-
       <div class="form-group">
         <label>Email*</label>
         <input type="email" name="email" required>
       </div>
       <div class="form-group">
         <label>Tinggi Badan*</label>
-        <input type="number" name="tinggi" required>
+        <input type="number" name="tinggi" step="0.01" required>
       </div>
-
       <div class="form-group">
         <label>Password*</label>
         <input type="password" name="password" required>
       </div>
       <div class="form-group">
         <label>Usia*</label>
-        <input type="number" name="usia" required>
+        <input type="number" name="umur" required>
       </div>
-
       <div class="form-group">
         <label>Jenis Kelamin*</label>
-        <input type="text" name="gender" required>
+        <select name="jenisKelamin" required>
+          <option value="" disabled selected>Pilih</option>
+          <option value="Laki-laki">Laki-laki</option>
+          <option value="Perempuan">Perempuan</option>
+        </select>
       </div>
-      <div></div>
 
       <div class="form-group full-width">
         <button type="submit">Register</button>
@@ -62,10 +75,6 @@
   <footer>
     <p>&copy; 2025 Aplikasi Kalori</p>
   </footer>
-
-  <script src="function.js">
-   
-  </script>
 
 </body>
 </html>

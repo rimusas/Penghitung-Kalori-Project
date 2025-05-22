@@ -9,17 +9,19 @@ class Food extends Model
 {
     use HasFactory;
 
-    // Nama tabel
-    protected $table = 'foods';
-
     // Atribut yang dapat diisi
     protected $fillable = [
         'user_id',
         'nama_makanan',
         'porsi',
         'total_kalori',
-        'mengandung_daging',
-        'seorang_vegetarian',
+        'kategori',
+    ];
+
+    // Kolom dengan tipe data casting
+    protected $casts = [
+        'porsi' => 'float',
+        'kalori_total' => 'float',
     ];
 
     // Relasi Food dimiliki oleh User

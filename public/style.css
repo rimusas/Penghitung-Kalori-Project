@@ -12,6 +12,14 @@
       align-items: center;
     }
 
+    .site-name {
+      display: flex;
+      gap: 20px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
     .menu {
       display: flex;
       gap: 20px;
@@ -61,6 +69,15 @@
     }
 
     .button-container button {
+      padding: 10px 20px;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button-container a {
       padding: 10px 20px;
       background-color: black;
       color: white;
