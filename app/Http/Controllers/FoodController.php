@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Food;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class FoodController extends Controller
 {
@@ -23,7 +22,7 @@ class FoodController extends Controller
         ]);
 
         // Simpan data makanan ke dalam database
-        $food = Food::create([
+        Food::create([
             'user_id' => Auth::id(),
             'nama_makanan' => $validated['nama_makanan'],
             'porsi' => $validated['porsi'],
