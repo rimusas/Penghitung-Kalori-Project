@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Riwayat Kalori</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tambah Makanan</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -13,7 +13,7 @@
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand ps-3" href="{{ url('/home') }}">E-Calory</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
-
+        
         <!-- Search Bar -->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
@@ -27,7 +27,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Pengaturan</a></li>
+                    <li><a class="dropdown-item" href="{{ url('/profile') }}">Pengaturan</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li>
                         <form action="{{ url('/logout') }}" method="POST" style="margin: 0;">
@@ -68,7 +68,7 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Start Healthy
+                    {{ Auth::user()->nama ?? 'Guest' }}
                 </div>
             </nav>
         </div>
@@ -77,58 +77,31 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Riwayat Kalori</h1>
+                    <h1 class="mt-4">Tambah Makanan</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="{{ url('/home') }}">Beranda</a></li>
-                        <li class="breadcrumb-item active">Riwayat</li>
+                        <li class="breadcrumb-item active">Tambah Makanan</li>
                     </ol>
                     <div class="card mb-4">
                         <div class="card-body">
-                            "Tabel di bawah ini menampilkan data riwayat kalori Anda yang telah dicatat selama penggunaan aplikasi. Informasi ini dapat membantu Anda memantau asupan kalori harian dan memahami pola konsumsi makanan Anda secara lebih terstruktur."
-                        </div>
-                    </div>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            Tabel Riwayat Kalori
-                        </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal</th>
-                                        <th>Nama Makanan</th>
-                                        <th>Jumlah Kalori</th>
-                                        <th>Status Kalori</th>
-                                    </tr>
-                                </thead>
-                                <tfoot id="riwayat-body">
-                                  <tbody>
-                                    @if ($history->isEmpty())
-                                        <tr>
-                                            <td colspan="4" class="text-center">Tidak ada data riwayat.</td>
-                                        </tr>
-                                    @else
-                                        @foreach ($history as $item)
-                                            <tr>
-                                                <td>{{ $item->created_at->format('d M Y') }}</td>
-                                                <td>{{ $item->nama_makanan }}</td>
-                                                <td>{{ $item->kalori_total }} kkal</td>
-                                                <td>
-                                                    @if ($item->kalori_total < 200)
-                                                        Kurang
-                                                    @elseif ($item->kalori_total >= 200 && $item->kalori_total <= 500)
-                                                        Cukup
-                                                    @else
-                                                        Berlebih
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                  </tbody>
-                                </tfoot>
-                            </table>
+                            <form action="{{ route('food.add') }}" method="POST">
+                                @csrf
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="nama_makanan" name="nama_makanan" type="text" placeholder="Nama Makanan" required />
+                                    <label for="nama_makanan">Nama Makanan</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="porsi" name="porsi" type="number" placeholder="Porsi" required />
+                                    <label for="porsi">Porsi</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="kalori_per_porsi" name="kalori_per_porsi" type="number" placeholder="Kalori per Porsi" required />
+                                    <label for="kalori_per_porsi">Kalori per Porsi (kkal)</label>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-success">Simpan</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -153,7 +126,5 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
 </body>
 </html>

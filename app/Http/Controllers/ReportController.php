@@ -14,54 +14,39 @@ class ReportController extends Controller
      */
     public function generateWeeklyReport()
     {
-        try {
-            // Ambil riwayat konsumsi makanan pengguna selama 7 hari terakhir
-            $userId = Auth::id();
-            $startDate = now()->subDays(6)->startOfDay(); // Awal 7 hari lalu
-            $endDate = now()->endOfDay(); // Akhir hari ini
+        $userId = Auth::id();
+        $startDate = now()->subDays(6)->startOfDay(); // Awal 7 hari lalu
+        $endDate = now()->endOfDay(); // Akhir hari ini
 
-            $weeklyData = Food::where('user_id', $userId)
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->selectRaw('DATE(created_at) as date, SUM(kalori_total) as total_calories')
-                ->groupBy('date')
-                ->orderBy('date', 'asc')
-                ->get();
+        $weeklyData = Food::where('user_id', $userId)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->selectRaw('DATE(created_at) as date, SUM(kalori_total) as total_calories')
+            ->groupBy('date')
+            ->orderBy('date', 'asc')
+            ->get();
 
-            // Data untuk visualisasi
-            $chartData = $weeklyData->map(function ($data) {
-                return [
-                    'date' => $data->date,
-                    'total_calories' => $data->total_calories
-                ];
-            });
+        $chartData = $weeklyData->map(function ($data) {
+            return [
+                'date' => $data->date,
+                'total_calories' => $data->total_calories
+            ];
+        });
 
-            // Rata-rata konsumsi kalori
-            $averageCalories = $weeklyData->avg('total_calories');
+        $averageCalories = $weeklyData->avg('total_calories');
+        $bestDay = $weeklyData->sortByDesc('total_calories')->first();
+        $worstDay = $weeklyData->sortBy('total_calories')->first();
 
-            // Hari terbaik dan terburuk
-            $bestDay = $weeklyData->sortByDesc('total_calories')->first();
-            $worstDay = $weeklyData->sortBy('total_calories')->first();
+        Log::info('Weekly report generated', ['user_id' => $userId]);
 
-            Log::info('Weekly report generated', ['user_id' => $userId]);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Weekly report generated successfully',
-                'data' => [
-                    'chart_data' => $chartData,
-                    'average_calories' => round($averageCalories),
-                    'best_day' => $bestDay,
-                    'worst_day' => $worstDay,
-                ]
-            ], 200);
-        } catch (\Exception $e) {
-            Log::error('Failed to generate weekly report', ['error' => $e->getMessage()]);
-
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to generate weekly report',
-                'details' => $e->getMessage()
-            ], 500);
-        }
+        return [
+            'status' => 'success',
+            'message' => 'Weekly report generated successfully',
+            'data' => [
+                'chart_data' => $chartData,
+                'average_calories' => round($averageCalories),
+                'best_day' => $bestDay,
+                'worst_day' => $worstDay,
+            ]
+        ];
     }
 }

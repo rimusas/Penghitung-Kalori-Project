@@ -9,39 +9,42 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Rute untuk autentikasi
-Route::view('/login', 'login')->name('login');
+Route::get('/login', function () { return view('login'); })->name('login');
 Route::post('/login', [UserController::class, 'login']);
 Route::view('/register', 'register')->name('register');
 Route::post('/register', [UserController::class, 'register']);
-Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth')->name('logout');
 
 // Rute yang memerlukan autentikasi
 Route::middleware('auth:sanctum')->group(function () {
   Route::get('/home', function () {
     return view('beranda', ['user' => Auth::user()]);
   })->middleware('auth')->name('home');
+  
   // Rute untuk profile
-  Route::view('/profile', 'profile')->name('profile');
-  Route::put('/profile', [ProfileController::class, 'updateProfile']);
-  Route::get('/profile', [ProfileController::class, 'viewProfile']);
+  Route::get('/profile', [ProfileController::class, 'viewProfile'])->name('profile');
+  Route::post('/profile', [ProfileController::class, 'profile']);
+  Route::put('/profile/update/', [ProfileController::class, 'updateProfile'])->middleware('auth')->name('profile.update');
 
   // Rute untuk food
   Route::get('/home', [FoodController::class, 'index'])->middleware('auth')->name('home');
-  Route::view('/riwayat','riwayat')->name('riwayat');
-  Route::post('/food/store', [FoodController::class, 'storeFoodEntry'])->middleware('auth')->name('food.store');
+  Route::get('/riwayat', [FoodController::class, 'getDailyHistory'])->name('riwayat');
+  Route::post('/food/store', [FoodController::class, 'storeFoodEntry'])->middleware('auth')->name('food.add');
   Route::put('/food/update/{id}', [FoodController::class, 'updateFoodEntry'])->middleware('auth')->name('food.update');
   Route::delete('/food/delete/{id}', [FoodController::class, 'deleteFoodEntry'])->middleware('auth')->name('food.delete');
   Route::get('/food/search', [FoodController::class, 'searchFood']);
-  Route::get('/food/history', [FoodController::class, 'getDailyHistory']);
+  Route::get('/food/history', [FoodController::class, 'getDailyHistory'])->name('userFoods');
+  Route::get('/inputMakanan', function () { return view('inputMakanan');})->name('inputMakanan');
 
   // Rute untuk calorie
   Route::get('/calories/calculate', [CalorieController::class, 'calculateCalories']);
   Route::post('/calories/check', [CalorieController::class, 'checkDailyCalories']);
 
   // Rute untuk Recommendation
+  Route::get('/recommendations', [RecommendationController::class, 'viewRecommendation'])->name('rekomendasi');
   Route::post('/recommendations', [RecommendationController::class, 'getRecommendations']);
 
   // Rute untuk Report
-  Route::get('/reports/weekly', [ReportController::class, 'generateWeeklyReport']);
+  Route::get('/laporan', [ReportController::class, 'generateWeeklyReport']);
   Route::view('/laporan', 'laporan')->name('laporan');
 });

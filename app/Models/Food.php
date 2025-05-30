@@ -13,6 +13,7 @@ class Food extends Model
     protected $fillable = [
         'user_id',
         'nama_makanan',
+        'kalori',
         'porsi',
         'kalori_total',
     ];

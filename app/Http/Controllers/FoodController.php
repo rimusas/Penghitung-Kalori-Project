@@ -9,6 +9,29 @@ use Illuminate\Support\Facades\Auth;
 class FoodController extends Controller
 {
     /**
+     * Ambil data untuk beranda.
+     */
+    public function index()
+    {
+        $user = Auth::user();
+        $foods = Food::all(); // Semua data makanan
+        $addedFoods = $user->foods ?? []; // Makanan yang sudah ditambahkan pengguna
+        $totalCalories = $addedFoods->sum('kalori_total'); // Total kalori yang dikonsumsi pengguna
+
+        /**
+         * Rumus Penghitung Kalori Harris Benedict
+         */
+
+        $calories = ($user->jenisKelamin === 'Laki-laki')
+            ? 66 + (13.7 * $user->berat) + (5 * $user->tinggi) - (6.78 * $user->umur)
+            : 655 + (9.6 * $user->berat) + (1.8 * $user->tinggi) - (4.7 * $user->umur);
+
+        $status = $totalCalories < $calories ? 'Kurang' : 'Normal';
+
+        return view('beranda', compact('user', 'foods', 'addedFoods', 'totalCalories', 'calories', 'status'));
+    }
+
+    /**
      * Tambahkan makanan yang dikonsumsi pengguna.
      */
     public function storeFoodEntry(Request $request)
@@ -81,12 +104,17 @@ class FoodController extends Controller
     /**
      * Dapatkan riwayat konsumsi makanan harian pengguna.
      */
-    public function getDailyHistory()
+    public function getDailyHistory(Request $request)
     {
+        $query = $request->get('keyword', null);
+
         // Ambil riwayat konsumsi makanan harian pengguna
         $history = Food::where('user_id', Auth::id())
-            ->whereDate('created_at', now()->toDateString())
-            ->get(['nama_makanan', 'porsi', 'kalori_total']);
+            ->when($query, function ($queryBuilder) use ($query) {
+                $queryBuilder->where('nama_makanan', 'like', '%' . $query . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->get(['created_at','nama_makanan', 'porsi', 'kalori_total']);
 
         return view('riwayat', [
             'history' => $history,
@@ -94,16 +122,7 @@ class FoodController extends Controller
     }
 
     /**
-     * Ambil data untuk beranda.
+     * Input Data Kalori Makanan Beserta Satuan
      */
-    public function index()
-    {
-        $foods = Food::where('user_id', Auth::id())->get(); // Ambil data makanan milik user yang sedang login
-        $user = Auth::user(); // Ambil data pengguna yang sedang login
 
-        return view('beranda', [
-            'user' => $user,
-            'foods' => $foods,
-        ]);
-    }
 }

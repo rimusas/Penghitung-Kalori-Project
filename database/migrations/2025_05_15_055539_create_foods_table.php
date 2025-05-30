@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('nama_makanan'); // Nama Makanan
-            $table->float('porsi', 5); // Jumlah porsi (maksimal 99999)
-            $table->float('kalori_total', 6); // Total Kalori makanan (maks 999999)
-            $table->enum('kategori', ['sarapan', 'makan_siang', 'makan_malam', 'snack'])->default('makan_siang'); // Kategori makanan
+            $table->float('kalori_total', 5, 3); // Jumlah kalori (maksimal 99999)
+            $table->integer('porsi'); // Berat dala satuan gram
             $table->timestamps();
         });
     }

@@ -27,6 +27,8 @@ class User extends Authenticatable
         'berat',
     ];
 
+    protected $table = 'users';
+
     /**
      * Kolom yang disembunyikan dalamm respons JSON
      *

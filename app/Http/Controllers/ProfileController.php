@@ -31,7 +31,7 @@ class ProfileController extends Controller
             return redirect('/home')->with('status', 'Profil berhasil diperbarui.');
         } else {
             Log::warning('Profile update failed', ['user_id' => $user->id]);
-            return redirect('/home')->with('error', 'Gagal memperbarui profil.');
+            return redirect('/profile')->with('error', 'Gagal memperbarui profil.');
         }
     }
 
@@ -40,37 +40,39 @@ class ProfileController extends Controller
      */
     public function calculateCalories()
     {
-        try {
-            // Ambil pengguna yang sedang login
-            $user = Auth::user();
-
-            // Formula sederhana untuk kebutuhan kalori harian berdasarkan data pengguna
-            $baseCalories = ($user->jenisKelamin === 'Laki-laki')
-                ? 88.362 + (13.397 * $user->berat) + (4.799 * $user->tinggi) - (5.677 * $user->umur)
-                : 447.593 + (9.247 * $user->berat) + (3.098 * $user->tinggi) - (4.330 * $user->umur);
-
-            // Konversi ke integer untuk hasil yang lebih sederhana
-            $calories = round($baseCalories);
-
-            Log::info('Calories calculated', ['user_id' => $user->id, 'calories' => $calories]);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Calories calculated successfully',
-                'data' => [
-                    'calories' => $calories
-                ]
-            ], 200);
-        } catch (\Exception $e) {
-            Log::error('Calories calculation failed', ['error' => $e->getMessage()]);
-
-            return response()->json([
+        // Ambil pengguna yang sedang login
+        $user = Auth::user();
+    
+        // Abort jika tidak ada user yang login
+        abort_unless($user, 401, 'Unauthorized access');
+    
+        // Pastikan data pengguna lengkap
+        if (!isset($user->berat, $user->tinggi, $user->umur, $user->jenisKelamin)) {
+            return response([
                 'status' => 'error',
-                'message' => 'Failed to calculate calories',
-                'details' => $e->getMessage()
-            ], 500);
+                'message' => 'Data pengguna tidak lengkap.',
+            ], 422);
         }
+    
+        // Hitung kalori berdasarkan jenis kelamin
+        $baseCalories = $user->jenisKelamin === 'Laki-laki'
+            ? 88.362 + (13.397 * $user->berat) + (4.799 * $user->tinggi) - (5.677 * $user->umur)
+            : 447.593 + (9.247 * $user->berat) + (3.098 * $user->tinggi) - (4.330 * $user->umur);
+    
+        $calories = round($baseCalories);
+    
+        Log::info('Calories calculated', [
+            'user_id' => $user->id,
+            'calories' => $calories
+        ]);
+    
+        return response([
+            'status' => 'success',
+            'message' => 'Calories calculated successfully',
+            'data' => ['calories' => $calories]
+        ], 200);
     }
+    
 
     public function viewProfile()
     {
