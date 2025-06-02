@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('nama_makanan'); // Nama Makanan
-            $table->float('kalori_total', 5, 3); // Jumlah kalori (maksimal 99999)
+            $table->float('jumlah_kalori'); // Kalori Makanan
             $table->integer('porsi'); // Berat dala satuan gram
+            $table->float('kalori_total', 5, 3); // Jumlah kalori (maksimal 99999)
             $table->timestamps();
         });
     }

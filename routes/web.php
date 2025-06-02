@@ -47,4 +47,5 @@ Route::middleware('auth:sanctum')->group(function () {
   // Rute untuk Report
   Route::get('/laporan', [ReportController::class, 'generateWeeklyReport']);
   Route::view('/laporan', 'laporan')->name('laporan');
+
 });

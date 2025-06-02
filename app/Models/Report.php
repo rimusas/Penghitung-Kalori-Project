@@ -12,7 +12,7 @@ class Report extends Model
     protected $fillable = [
         'user_id',
         'tanggal',
-        'total_kalori',
+        'kalori_total',
         'status',
         'rata_rata_mingguan',
     ];

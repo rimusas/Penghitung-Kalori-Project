@@ -154,24 +154,17 @@
                         <thead>
                             <tr>
                                 <th>Nama Bahan Makanan</th>
-                                <th>Berat gr (Satuan)</th>
-                                <th>Tambah</th>
+                                <th>Kalori (kkal)</th>
+                                <th>Berat (gram)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($foods as $food)
+                            @foreach ($tabelMakanan as $makanan)
                                 <tr>
-                                    <td>{{ $food->nama_makanan }}</td>
-                                    <td>{{ $food->berat_per_porsi }} {{ $food->satuan }}</td>
+                                    <td>{{ $makanan->makanan }}</td>
+                                    <td>{{ $makanan->kalori_makanan }}</td>
+                                    <td>{{ $makanan->berat_makanan }}</td>
                                     <td>
-                                        <form action="{{ route('food.add') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $food->id }}">
-                                            <button class="btn btn-sm btn-primary" title="Tambah ke daftar">
-                                                <i class="fas fa-plus-circle"></i>
-                                            </button>
-                                        </form>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

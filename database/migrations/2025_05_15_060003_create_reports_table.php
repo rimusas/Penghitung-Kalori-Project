@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Relasi ke tabel users
             $table->date('tanggal'); // Tanggal Kalori
-            $table->float('total_kalori'); // Total kalori pada hari tertentu
+            $table->float('kalori_total'); // Total kalori pada hari tertentu
             $table->enum('status', ['cukup', 'kurang', 'berlebih']);
             $table->float('rata_rata_mingguan', 8)->nullable(); // Rata-rata kalori dalam seminggu
             $table->timestamps();
