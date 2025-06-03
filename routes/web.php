@@ -6,7 +6,9 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Monolog\Handler\RotatingFileHandler;
 
 // Rute untuk autentikasi
 Route::get('/login', function () { return view('login'); })->name('login');
@@ -18,7 +20,7 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth')->n
 // Rute yang memerlukan autentikasi
 Route::middleware('auth:sanctum')->group(function () {
   Route::get('/home', function () {
-    return view('beranda', ['user' => Auth::user()]);
+    return view('beranda', ['user' => User::user()]);
   })->middleware('auth')->name('home');
   
   // Rute untuk profile
@@ -47,4 +49,5 @@ Route::middleware('auth:sanctum')->group(function () {
   // Rute untuk Report
   Route::get('/laporan', [ReportController::class, 'generateWeeklyReport']);
   Route::view('/laporan', 'laporan')->name('laporan');
+
 });

@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Masuk sebagai:</div>
+                    <div class="small">Logged in as:</div>
                     {{ Auth::user()->nama }}
                 </div>
             </nav>

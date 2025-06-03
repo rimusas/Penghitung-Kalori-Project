@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\FoodsImport;
 use App\Models\Food;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,9 @@ class FoodController extends Controller
 
         $status = $totalCalories < $calories ? 'Kurang' : 'Normal';
 
-        return view('beranda', compact('user', 'foods', 'addedFoods', 'totalCalories', 'calories', 'status'));
+        $makanans = FoodsImport::all();
+
+        return view('beranda', compact('user', 'foods', 'addedFoods', 'totalCalories', 'calories', 'status','makanans'));
     }
 
     /**
@@ -120,9 +123,4 @@ class FoodController extends Controller
             'history' => $history,
         ]);
     }
-
-    /**
-     * Input Data Kalori Makanan Beserta Satuan
-     */
-
 }

@@ -66,10 +66,10 @@
                         </a>
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    Start Healthy
-                </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                {{ Auth::user()->nama ?? 'Guest' }}
+            </div>
             </nav>
         </div>
 
@@ -99,7 +99,6 @@
                                         <th>Tanggal</th>
                                         <th>Nama Makanan</th>
                                         <th>Jumlah Kalori</th>
-                                        <th>Status Kalori</th>
                                     </tr>
                                 </thead>
                                 <tfoot id="riwayat-body">
@@ -114,15 +113,6 @@
                                                 <td>{{ $item->created_at->format('d M Y') }}</td>
                                                 <td>{{ $item->nama_makanan }}</td>
                                                 <td>{{ $item->kalori_total }} kkal</td>
-                                                <td>
-                                                    @if ($item->kalori_total < 200)
-                                                        Kurang
-                                                    @elseif ($item->kalori_total >= 200 && $item->kalori_total <= 500)
-                                                        Cukup
-                                                    @else
-                                                        Berlebih
-                                                    @endif
-                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif

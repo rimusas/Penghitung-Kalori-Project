@@ -1,17 +1,22 @@
 <?php
 
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use app\Models\Food;
+namespace App\Models;
 
-class FoodsImport implements ToModel, WithHeadingRow
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class FoodsImport extends Model
 {
-  public function model(array $row)
-  {
-    return new Food([
-      'nama_makanan' => $row['nama'],
-      'kalori' => $row['kalori'],
-      'satuan' => $row['berat'],
-    ]);
-  }
+    use HasFactory;
+
+    protected $fillable = [
+        'data_makanan',
+        'data_kalori',
+        'data_berat',
+    ];
+
+    protected $casts = [
+        'data_kalori' => 'float',
+        'data_berat' => 'float',
+    ];
 }
