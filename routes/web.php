@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('/recommendations', [RecommendationController::class, 'getRecommendations']);
 
   // Rute untuk Report
-  Route::get('/laporan', [ReportController::class, 'generateWeeklyReport']);
-  Route::view('/laporan', 'laporan')->name('laporan');
+  Route::get('/laporan', [ReportController::class, 'generateWeeklyReport'])->name('laporan');
+
 
 });
