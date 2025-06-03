@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TabelMakanan
+use App\Models\TabelMakanan;
 use App\Models\Food;
 use Illuminate\Support\Facades\Auth;
 

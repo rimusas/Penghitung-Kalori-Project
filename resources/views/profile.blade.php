@@ -51,7 +51,7 @@
                     <div class="sb-sidenav-menu-heading">Navigasi</div>
                     <a class="nav-link" href="{{ route('home') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        Dashboard
+                        Beranda
                     </a>
                     <a class="nav-link" href="{{ route('laporan') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>

@@ -9,20 +9,6 @@
 
 window.addEventListener('DOMContentLoaded', event => {
 
-    // Toggle the side navigation
-    const sidebarToggle = document.body.querySelector('#sidebarToggle');
-    if (sidebarToggle) {
-        // Uncomment Below to persist sidebar toggle between refreshes
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-        //     document.body.classList.toggle('sb-sidenav-toggled');
-        // }
-        sidebarToggle.addEventListener('click', event => {
-            event.preventDefault();
-            document.body.classList.toggle('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-        });
-    }
-
     window.addEventListener('DOMContentLoaded', event => {
         const sidebarToggle = document.body.querySelector('#sidebarToggle');
         if (sidebarToggle) {
@@ -59,4 +45,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
   });
-  
+
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof window.chartData !== 'undefined' && document.getElementById('calorieChart')) {
+        const chartData = window.chartData;
+        const labels = chartData.map(data => data.date);
+        const data = chartData.map(data => data.total_calories);
+
+        const ctx = document.getElementById('calorieChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Kalori (kkal)',
+                    data: data,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 1,
+                }],
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tanggal',
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Kalori (kkal)',
+                        },
+                    },
+                },
+            },
+        });
+    }
+});

@@ -6,14 +6,17 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Laporan - E-Calory</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
     <!-- Navbar -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand ps-3" href="{{ route('home') }}">E-Calory</a>
+        <a class="navbar-brand ps-3" href="{{ url('home') }}">E-Calory</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        
         <!-- Search Bar -->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
@@ -21,14 +24,13 @@
                 <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
             </div>
         </form>
+        
         <!-- User Dropdown -->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                    <i class="fas fa-user fa-fw"></i>
-                </a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{{ route('profile') }}">Pengaturan</a></li>
+                    <li><a class="dropdown-item" href="{{ url('profile') }}">Pengaturan</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
@@ -41,6 +43,7 @@
         </ul>
     </nav>
 
+    <div id="layoutSidenav">
     <!-- Sidebar -->
     <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -71,8 +74,8 @@
                 </div>
             </nav>
         </div>
-    <!-- Main Content -->
-    <div id="layoutSidenav_content">
+        <div id="layoutSidenav_content">
+        <!-- Main Content -->
         <main>
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Laporan</h1>
@@ -110,99 +113,49 @@
                     </div>
                 </div>
             </footer>
+        </div>
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const chartData = @json($chartData);
-            const labels = chartData.map(data => data.date);
-            const data = chartData.map(data => data.total_calories);
+    document.addEventListener('DOMContentLoaded', function () {
+        // Grafik utama
+        const chartData = @json($chartData);
+        const labels = chartData.map(data => data.date);
+        const data = chartData.map(data => data.total_calories);
 
-            const ctx = document.getElementById('calorieChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Total Kalori (kkal)',
-                        data: data,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderWidth: 1,
-                    }],
+        const ctx = document.getElementById('calorieChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Kalori (kkal)',
+                    data: data,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 1,
+                }],
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Tanggal' } },
+                    y: { title: { display: true, text: 'Kalori (kkal)' } }
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Tanggal',
-                            },
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Kalori (kkal)',
-                            },
-                        },
-                    },
-                },
-            });
+            },
         });
 
-        window.addEventListener('DOMContentLoaded', event => {
-
-    // Toggle the side navigation
-    const sidebarToggle = document.body.querySelector('#sidebarToggle');
-    if (sidebarToggle) {
-        // Uncomment Below to persist sidebar toggle between refreshes
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-        //     document.body.classList.toggle('sb-sidenav-toggled');
-        // }
-        sidebarToggle.addEventListener('click', event => {
-            event.preventDefault();
-            document.body.classList.toggle('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-        });
-    }
-
-    window.addEventListener('DOMContentLoaded', event => {
-        const sidebarToggle = document.body.querySelector('#sidebarToggle');
+        // Toggle sidebar
+        const sidebarToggle = document.querySelector('#sidebarToggle');
         if (sidebarToggle) {
-            sidebarToggle.addEventListener('click', event => {
-                event.preventDefault();
+            sidebarToggle.addEventListener('click', function (e) {
+                e.preventDefault();
                 document.body.classList.toggle('sb-sidenav-toggled');
                 localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
             });
         }
-    });    
-
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-    const ctx = document.getElementById('weeklyReportChart').getContext('2d');
-    const chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'Kalori Konsumsi',
-                data: [2000, 2100, 2200, 2300, 2400, 2500, 2600], // Ganti dengan data dinamis
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
     });
     </script>
 </body>
