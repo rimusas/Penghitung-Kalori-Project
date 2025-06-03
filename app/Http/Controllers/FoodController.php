@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\FoodsImport;
+use App\Models\TabelMakanan
 use App\Models\Food;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,23 +15,16 @@ class FoodController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $foods = Food::all(); // Semua data makanan
-        $addedFoods = $user->foods ?? []; // Makanan yang sudah ditambahkan pengguna
-        $totalCalories = $addedFoods->sum('kalori_total'); // Total kalori yang dikonsumsi pengguna
-
-        /**
-         * Rumus Penghitung Kalori Harris Benedict
-         */
-
+        $foods = Food::all();
+        $addedFoods = $user->foods ?? [];
+        $totalCalories = $addedFoods->sum('kalori_total');
         $calories = ($user->jenisKelamin === 'Laki-laki')
             ? 66 + (13.7 * $user->berat) + (5 * $user->tinggi) - (6.78 * $user->umur)
             : 655 + (9.6 * $user->berat) + (1.8 * $user->tinggi) - (4.7 * $user->umur);
-
         $status = $totalCalories < $calories ? 'Kurang' : 'Normal';
+        $tabelMakanan = TabelMakanan::all();
 
-        $makanans = FoodsImport::all();
-
-        return view('beranda', compact('user', 'foods', 'addedFoods', 'totalCalories', 'calories', 'status','makanans'));
+        return view('beranda', compact('user', 'foods', 'addedFoods', 'totalCalories', 'calories', 'status', 'tabelMakanan'));
     }
 
     /**
@@ -52,6 +45,7 @@ class FoodController extends Controller
             'user_id' => Auth::id(),
             'nama_makanan' => $validated['nama_makanan'],
             'porsi' => $validated['porsi'],
+            'jumlah_kalori' => $validated['porsi'] * $validated['kalori_per_porsi'],
             'kalori_total' => $validated['porsi'] * $validated['kalori_per_porsi'],
         ]);
 

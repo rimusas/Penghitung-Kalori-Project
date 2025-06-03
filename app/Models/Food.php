@@ -13,7 +13,7 @@ class Food extends Model
     protected $fillable = [
         'user_id',
         'nama_makanan',
-        'kalori',
+        'jumlah_kalori',
         'porsi',
         'kalori_total',
     ];
@@ -22,6 +22,7 @@ class Food extends Model
 
     // Kolom dengan tipe data casting
     protected $casts = [
+        'jumlah_kalori' => 'float',
         'porsi' => 'float',
         'kalori_total' => 'float',
     ];

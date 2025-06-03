@@ -156,22 +156,23 @@
                         <thead>
                             <tr>
                                 <th>Nama Bahan Makanan</th>
-                                <th>Jumlah Kalori (kkal)</th>
-                                <th>Berat (gr)</th>
+                                <th>Kalori (kkal)</th>
+                                <th>Berat gr (Satuan)</th>
+                                <th>Tambah</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($makanans as $makanan)
+                            @foreach ($tabelMakanan as $makanan)
                                 <tr>
-                                    <td>{{ $makanan->data_makanan }}</td>
-                                    <td>{{ $makanan->data_kalori }}</td> 
-                                    <td>{{ $makanan->data_berat }}</td>
+                                    <td>{{ $makanan->makanan }}</td>
+                                    <td>{{ $makanan->kalori_makanan}}</td>
+                                    <td>{{ $makanan->berat_makanan}}</td>
                                     <td>
                                         <form action="{{ route('food.add') }}" method="POST">
                                             @csrf
-                                            <input type="hidden" name="nama_makanan" value="{{ $makanan->data_makanan }}">
+                                            <input type="hidden" name="id" value="{{ $makanan->makanan }}">
                                             <input type="hidden" name="porsi" value="1"> {{-- atau sesuai logika --}}
-                                            <input type="hidden" name="kalori_per_porsi" value="{{ $makanan->data_kalori / ($makanan->berat ?: 1) }}">
+                                            <input type="hidden" name="kalori_per_porsi" value="{{ $makanan->kalori_makanan / ($makanan->berat_makanan ?: 1) }}">
                                             <button class="btn btn-sm btn-primary" title="Tambah ke daftar">
                                                 <i class="fas fa-plus-circle"></i>
                                             </button>
