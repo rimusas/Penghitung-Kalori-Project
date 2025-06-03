@@ -32,8 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('/home', [FoodController::class, 'index'])->middleware('auth')->name('home');
   Route::get('/riwayat', [FoodController::class, 'getDailyHistory'])->name('riwayat');
   Route::post('/food/store', [FoodController::class, 'storeFoodEntry'])->middleware('auth')->name('food.add');
-  Route::put('/food/update/{id}', [FoodController::class, 'updateFoodEntry'])->middleware('auth')->name('food.update');
-  Route::delete('/food/delete/{id}', [FoodController::class, 'deleteFoodEntry'])->middleware('auth')->name('food.delete');
+  Route::put('/food/update/', [FoodController::class, 'updateFoodEntry'])->middleware('auth')->name('food.update');
+  Route::delete('/food/delete/', [FoodController::class, 'deleteFoodEntry'])->middleware('auth')->name('food.delete');
   Route::get('/food/search', [FoodController::class, 'searchFood']);
   Route::get('/food/history', [FoodController::class, 'getDailyHistory'])->name('userFoods');
   Route::get('/inputMakanan', function () { return view('inputMakanan');})->name('inputMakanan');

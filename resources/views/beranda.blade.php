@@ -156,23 +156,22 @@
                         <thead>
                             <tr>
                                 <th>Nama Bahan Makanan</th>
-                                <th>Kalori (kkal)</th>
-                                <th>Berat gr (Satuan)</th>
-                                <th>Tambah</th>
+                                <th>Jumlah Kalori (kkal)</th>
+                                <th>Berat (gr)</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($tabelMakanan as $makanan)
                                 <tr>
                                     <td>{{ $makanan->makanan }}</td>
-                                    <td>{{ $makanan->kalori_makanan}}</td>
-                                    <td>{{ $makanan->berat_makanan}}</td>
+                                    <td>{{ $makanan->kalori_makanan }}</td> 
+                                    <td>{{ $makanan->berat_makanan }}</td>
                                     <td>
                                         <form action="{{ route('food.add') }}" method="POST">
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $makanan->makanan }}">
+                                            <input type="hidden" name="nama_makanan" value="{{ $makanan->makanan }}">
                                             <input type="hidden" name="porsi" value="1"> {{-- atau sesuai logika --}}
-                                            <input type="hidden" name="kalori_per_porsi" value="{{ $makanan->kalori_makanan / ($makanan->berat_makanan ?: 1) }}">
+                                            <input type="hidden" name="kalori_per_porsi" value="{{ $makanan->kalori_makanan }}">
                                             <button class="btn btn-sm btn-primary" title="Tambah ke daftar">
                                                 <i class="fas fa-plus-circle"></i>
                                             </button>
@@ -184,7 +183,7 @@
                     </table>
                 </div>
             </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script srsc="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{{ asset('js/scripts.js') }}"></script>
     </body>
 </html>
